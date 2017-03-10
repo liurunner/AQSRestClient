@@ -15,7 +15,7 @@ class CommonLoggingFormatter(logging.Formatter):
     def format_time(self, record, date_format=None):
         ct = self.converter(record.created)
         s = ct.strftime(date_format) if date_format else ct.strftime("%Y-%m-%d %H:%M:%S")
-        s += ",%03d [%d-%d]" % (record.msecs, __pid__, thread.get_ident())
+        s += ",%03d [%d]" % (record.msecs, __pid__, thread.get_ident())
         return s
 
 
@@ -35,17 +35,19 @@ class CommonLogging(object):
                   log_console=True, log_console_level=logging.DEBUG):
 
         verbose_format = '%(asctime)s [%(process)d-%(thread)d] %(levelname)s %(name)s : %(message)s'
+        medium_format = '%(asctime)s %(levelname)s %(name)s : %(message)s'
         simple_format = '%(levelname)s %(message)s'
 
         log_config = {
             'version': 1,
             'formatters': {
                 'simple': {'format': simple_format},
+                'medium': {'format': medium_format},
                 'verbose': {'format': verbose_format}
             },
             'handlers': {
                 'console': {
-                    'class': 'logging.StreamHandler', 'formatter': 'verbose', 'level': log_console_level
+                    'class': 'logging.StreamHandler', 'formatter': 'medium', 'level': log_console_level
                 },
             },
             'loggers': {
