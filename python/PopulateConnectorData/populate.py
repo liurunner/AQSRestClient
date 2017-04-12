@@ -67,11 +67,14 @@ class ConnectorPropagator(object):
         exchange_configuration = self.reset_exchange_configuration_setting_to_empty(exchange_configurations['domainObjects'][0])
 
         setting_key_values = {
+            'DEFAULT_TIME_ZONE_OFFSET_HOURS': '-7',
+            'DEFAULT_LOCATION_PATH': 'Locations.DummyFolder',
+            'DEFAULT_LOCATION_TYPE': 'Water Quality Site(AQS)',
+            'DEFAULT_LOCATION_EXTENDED_ATTRIBUTES': 'NumSensors=10,Device=Trimble GPS GeoExplorer XH 6000,PlannedDatetime=2015-12-12 12:00',
+            'DEFAULT_TIME_SERIES_EXTENDED_ATTRIBUTES': '',
             'DEPTH_PARAMETER': 'DEPTH',
             'DEPTH_PARAMETER_UNIT': 'ft',
-            'NON_DETECT_ALGORITHM': 'HALF_MDL',
-            'DEFAULT_LOCATION_PATH': 'Locations.AQS',
-            'DEFAULT_TIME_ZONE_OFFSET_HOURS': '-7'
+            'NON_DETECT_ALGORITHM': 'HALF_MDL'
         }
         for key, value in setting_key_values.iteritems():
             exchange_configuration['settings'].append({'key': key, 'value': value})
