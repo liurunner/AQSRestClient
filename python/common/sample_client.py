@@ -1,10 +1,10 @@
 import json
 import ntpath
-import urllib
+import urllib.parse
 import uuid
 
-from common_logging import CommonLogging
-from rest_client import RestClient
+from .common_logging import CommonLogging
+from .rest_client import RestClient
 
 __CREATED_BY__ = 'Created by AQSRestClient'
 
@@ -51,7 +51,7 @@ class SampleClient(object):
             query_params.update(params)
         if len(query_params) > 0:
             query_string_sep = '&' if '?' in url else '?'
-            url += query_string_sep + urllib.urlencode(query_params)
+            url += query_string_sep + urllib.parse.urlencode(query_params)
 
         return url
 

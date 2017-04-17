@@ -23,7 +23,7 @@ class AppConfig(object):
         try:
             opts, args = getopt.getopt(sys.argv[1:], '', ['token=', 'host=', 'host2=', 'log'])
         except getopt.GetoptError as err:
-            print str(err)
+            print(str(err))
             sys.exit(2)
 
         if opts:
@@ -49,7 +49,7 @@ class ConnectorPropagator(object):
     def populate_locations(self, location_data_tuple):
         sampling_locations = []
 
-        for sampling_location_custom_id, location_data in location_data_tuple.iteritems():
+        for sampling_location_custom_id, location_data in location_data_tuple.items():
             sampling_location_overrides = {'customId': sampling_location_custom_id, 'latitude': '49.2061028', 'longitude': '-123.1504412'}
             sampling_location = self.sample_client.get_or_create_sampling_location(sampling_location_overrides)
             sampling_locations.append(sampling_location)
@@ -76,21 +76,21 @@ class ConnectorPropagator(object):
         setting_key_values = {
             'DEFAULT_TIME_ZONE_OFFSET_HOURS': '-7',
             'DEFAULT_LOCATION_PATH': 'All Locations',
-            'DEFAULT_LOCATION_TYPE': 'Water Quality Site',
+            #'DEFAULT_LOCATION_TYPE': 'Water Quality Site',
             # AQUARIUS Time Series 3X
             #'DEFAULT_LOCATION_EXTENDED_ATTRIBUTES': 'NumSensors=10,Device=Trimble GPS GeoExplorer XH 6000,PlannedDatetime=2015-12-12 12:00',
             #'DEFAULT_TIME_SERIES_EXTENDED_ATTRIBUTES': '',
             # AQUARIUS Time Series NG
-            'DEFAULT_LOCATION_EXTENDED_ATTRIBUTES': 'LOGGERTYPE@LOCATION_EXTENSION=loggerType,NUMBEROFSENSORS@LOCATION_EXTENSION=5,LASTMODIFIED@LOCATION_EXTENSION=2015-12-12T12:00:00',
-            'DEFAULT_TIME_SERIES_EXTENDED_ATTRIBUTES': 'AVERAGE@TIMESERIES_EXTENSION=12,RECORDDATE@TIMESERIES_EXTENSION=2016-10-01T12:00:00,DATADESC@TIMESERIES_EXTENSION=My description',
+            #'DEFAULT_LOCATION_EXTENDED_ATTRIBUTES': 'LOGGERTYPE@LOCATION_EXTENSION=loggerType,NUMBEROFSENSORS@LOCATION_EXTENSION=5,LASTMODIFIED@LOCATION_EXTENSION=2015-12-12T12:00:00',
+            #'DEFAULT_TIME_SERIES_EXTENDED_ATTRIBUTES': 'AVERAGE@TIMESERIES_EXTENSION=12,RECORDDATE@TIMESERIES_EXTENSION=2016-10-01T12:00:00,DATADESC@TIMESERIES_EXTENSION=My description',
             'DEPTH_PARAMETER': 'DEPTH',
             'DEPTH_PARAMETER_UNIT': 'ft',
             'NON_DETECT_ALGORITHM': 'HALF_MDL'
         }
-        for key, value in setting_key_values.iteritems():
+        for key, value in setting_key_values.items():
             exchange_configuration['settings'].append({'key': key, 'value': value})
 
-        for sampling_location_id, aqts_location in external_location_dict.iteritems():
+        for sampling_location_id, aqts_location in external_location_dict.items():
             exchange_configuration['samplingLocationMappings'].append({
                 'samplingLocation': {'id': sampling_location_id},
                 'externalLocation': aqts_location
@@ -256,8 +256,8 @@ if __name__ == '__main__':
         connectorPropagator = ConnectorPropagatorOnSecondSync(app_config.token, app_config.base_url)
         connectorPropagator.populate()
     else:
-        firstConnectorPropagator = ConnectorPropagator(app_config.token, app_config.base_url)
-        firstConnectorPropagator.populate()
+        connectorFirstSyncPropagator = ConnectorPropagator(app_config.token, app_config.base_url)
+        connectorFirstSyncPropagator.populate()
 
-        secondConnectorPropagator = ConnectorPropagatorOnSecondSync(app_config.token, app_config.base_url_second)
-        secondConnectorPropagator.populate()
+        connectorSecondSyncPropagator = ConnectorPropagatorOnSecondSync(app_config.token, app_config.base_url_second)
+        connectorSecondSyncPropagator.populate()
