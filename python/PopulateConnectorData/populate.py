@@ -154,8 +154,8 @@ class ConnectorPropagator(object):
 ,{0},Ammonia,2014-10-29T09:00:00.000-07:00,2014-10-29T09:00:00.000-07:00,5,ft,LAB,8.6,mg/l,Preliminary,Ok,Water,{0}_SA_20141029_1,GRAB,,,,bottle1,,,LOWER,,,,,,,,,,,,
 ,{0},Ammonia,2014-10-29T09:10:00.000-07:00,2014-10-29T09:10:00.000-07:00,5,ft,LAB,,mg/l,Preliminary,Ok,Water,{0}_SA_20141029_2,GRAB,,,,bottle2-ND,,not detected,LOWER,50,0.1,,,,,,,,,,
 ,{0},Ammonia,2014-10-29T09:20:00.000-07:00,2014-10-29T09:20:00.000-07:00,5,ft,LAB,8.2,mg/l,Preliminary,Ok,Water,{0}_SA_20141029_3_1,GRAB,,,,bottle3,,,LOWER,,,,,,,,,,,,
-,{0},Ammonia,2014-10-29T09:20:00.000-07:00,2014-10-29T09:20:00.000-07:00,10,ft,LAB,8.4,mg/l,Preliminary,Ok,Water,{0}_SA_20141029_3_2,GRAB,,,,bottle3_1,,,LOWER,,,,,,,,,,,,
-,{0},Ammonia,2014-10-29T09:20:00.000-07:00,2014-10-29T09:20:00.000-07:00,20,ft,LAB,8.4,mg/l,Preliminary,Ok,Water,{0}_SA_20141029_3_3,GRAB,,,,bottle3_2,,,LOWER,,,,,,,,,,,,
+,{0},Ammonia,2014-10-29T09:20:00.000-07:00,2014-10-29T09:20:00.000-07:00,10,ft,LAB,8.2,mg/l,Preliminary,Ok,Water,{0}_SA_20141029_3_2,GRAB,,,,bottle3_1,,,LOWER,,,,,,,,,,,,
+,{0},Ammonia,2014-10-29T09:20:00.000-07:00,2014-10-29T09:20:00.000-07:00,20,ft,LAB,8.2,mg/l,Preliminary,Ok,Water,{0}_SA_20141029_3_3,GRAB,,,,bottle3_2,,,LOWER,,,,,,,,,,,,
 ,{0},Ammonia,2014-10-29T09:30:00.000-07:00,2014-10-29T09:30:00.000-07:00,5,ft,LAB,8.8,mg/l,Preliminary,Ok,Water,{0}_SA_20141029_4,GRAB,,,,bottle4,,,LOWER,,,,,,,,,,,,
 ,{0},Total Dissolved Solids,2014-10-29T09:00:00.000-07:00,2014-10-29T09:00:00.000-07:00,5,ft,LAB,8.6,mg/l,Preliminary,Ok,Water,{0}_SA_20141029_1,GRAB,,,,bottle1,,,LOWER,,,,,,,,,,,,
 ,{0},Total Dissolved Solids,2014-10-29T09:10:00.000-07:00,2014-10-29T09:10:00.000-07:00,5,ft,LAB,,mg/l,Preliminary,Ok,Water,{0}_SA_20141029_2,GRAB,,,,bottle2-ND,,not detected,LOWER,50,0.1,,,,,,,,,,
@@ -171,6 +171,7 @@ class ConnectorPropagator(object):
 """
             },
             'AqsConnectorLoc4': {
+                'external_location': '',
                 'external_location': 'NoneExistingLocation'
             }
         }
@@ -188,13 +189,13 @@ class ConnectorPropagator(object):
         return {
                 ('Ammonia', 'NH4NH3_dis', 'mg/l'),
                 ('Battery Voltage', 'VB', 'V'),
-                ('Chlorophyll a', 'WY', 'μg/l'),
+                ('Chlorophyll a', 'WY', 'ug/l'),
                 ('DO (Concentration)', 'WO', 'mg/l'),
                 ('DO (Saturation)', 'WX', '%'),
                 ('ORP', 'ORP', 'mV'),
                 ('pH', 'PH', 'pH Units'),
-                ('Specific conductance', 'SpCond', 'μS/cm'),
-                ('Temperature', 'TW', '°F'),
+                ('Specific conductance', 'SpCond', 'uS/cm'),
+                ('Temperature', 'TW', 'degF'),
                 ('Total Dissolved Solids', 'TDS', 'mg/l'),
                 ('Total suspended solids', 'TSS', 'mg/l'),
                 ('Turbidity', 'WTNTU', '_NTU'),
@@ -226,6 +227,8 @@ class ConnectorPropagatorOnSecondSync(ConnectorPropagator):
 ,{0},Ammonia,2014-10-29T09:00:00.000-07:00,2014-10-29T09:05:00.000-07:00,5,ft,LAB,9.6,mg/l,Preliminary,Ok,Water,{0}_SA_20141029_1,GRAB,,,,bottle1,,,LOWER,,,,,,,,,,,,
 ,{0},Ammonia,2014-10-29T09:10:00.000-07:00,2014-10-29T09:10:00.000-07:00,5,ft,LAB,,mg/l,Preliminary,Ok,Water,{0}_SA_20141029_2,GRAB,,,,bottle2-ND,,not detected,LOWER,50,0.1,,,,,,,,,,
 ,{0},Ammonia,2014-10-29T09:20:00.000-07:00,2014-10-29T09:15:00.000-07:00,5,ft,LAB,9.2,mg/l,Preliminary,Ok,Water,{0}_SA_20141029_3_1,GRAB,,,,bottle3,,,LOWER,,,,,,,,,,,,
+,{0},Ammonia,2014-10-29T09:20:00.000-07:00,2014-10-29T09:20:00.000-07:00,10,ft,LAB,9.2,mg/l,Preliminary,Ok,Water,{0}_SA_20141029_3_2,GRAB,,,,bottle3_1,,,LOWER,,,,,,,,,,,,
+,{0},Ammonia,2014-10-29T09:20:00.000-07:00,2014-10-29T09:20:00.000-07:00,20,ft,LAB,9.2,mg/l,Preliminary,Ok,Water,{0}_SA_20141029_3_3,GRAB,,,,bottle3_2,,,LOWER,,,,,,,,,,,,
 ,{0},Ammonia,2014-10-29T09:30:00.000-07:00,2014-10-29T09:20:00.000-07:00,5,ft,LAB,9.8,mg/l,Preliminary,Ok,Water,{0}_SA_20141029_4,GRAB,,,,bottle4,,,LOWER,,,,,,,,,,,,
 ,{0},Total suspended solids,2014-10-29T09:00:00.000-07:00,2014-10-29T09:05:00.000-07:00,5,ft,LAB,9.6,mg/l,Preliminary,Ok,Water,{0}_SA_20141029_1,GRAB,,,,bottle1,,,LOWER,,,,,,,,,,,,
 ,{0},Total suspended solids,2014-10-29T09:10:00.000-07:00,2014-10-29T09:10:00.000-07:00,5,ft,LAB,,mg/l,Preliminary,Ok,Water,{0}_SA_20141029_2,GRAB,,,,bottle2-ND,,not detected,LOWER,50,0.1,,,,,,,,,,
