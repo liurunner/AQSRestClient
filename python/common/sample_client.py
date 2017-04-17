@@ -10,14 +10,13 @@ __CREATED_BY__ = 'Created by AQSRestClient'
 
 
 class SampleClient(object):
-    def __init__(self, token, base_url, certs=None):
+    def __init__(self, token, base_url):
         assert token is not None, 'token is required to instantiate SampleClient'
         assert base_url is not None, 'base_url is required to instantiate SampleClient'
 
         self.logger = CommonLogging.get_logger("SampleClient")
         self.token = token
         self.base_url = base_url
-        self.certs = certs
 
         self.logger.info('token: %s', self.token)
         self.logger.info('baseUrl: %s', self.base_url)
@@ -27,8 +26,20 @@ class SampleClient(object):
             'Content-Type': 'application/json',
             'Authorization': 'token ' + self.token
         })
-        if self.certs is not None:
-            self.rest_client.set_verify(self.certs)
+        if 'debug.gaiaserve.net' in self.base_url:
+            self.rest_client.set_verify('../resources/gaia-sm-ca-chain.cert.pem')
+        elif '.gaiaserve.net' in self.base_url:
+            self.rest_client.set_verify(True)
+            self.rest_client.set_cert(('../resources/gaiaserve-net.cert.pem', '../resources/gaiaserve-net.key.pem'))
+        elif '.aqsamples.com' in self.base_url:
+            self.rest_client.set_verify(True)
+
+    def check_availability(self):
+        response = self.rest_client.get(self.get_url('status'))
+        status_object = json.loads(response.text)
+        if 'releaseName' not in status_object:
+            raise RuntimeError('Target sample tenant {0} is not available.'.format(self.base_url))
+        return status_object
 
     def get_url(self, list_path, params=None, domain_object_id=None, version='v1', with_token=False):
         url = SampleClient.url_join(self.base_url, version, list_path)
