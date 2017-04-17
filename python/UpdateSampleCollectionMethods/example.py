@@ -9,7 +9,7 @@ class SampleClient(object):
         try:
             opts, args = getopt.getopt(sys.argv[1:], "", ["token=", "host="])
         except getopt.GetoptError as err:
-            print str(err)  # will print something like "option -a not recognized"
+            print(str(err))  # will print something like "option -a not recognized"
             sys.exit(2)
 
         if opts:
@@ -20,8 +20,8 @@ class SampleClient(object):
                     self.baseUrl = "https://{0}/api/v1".format(arg)
                 else:
                     pass
-        print 'token:', self.token
-        print 'baseUrl:', self.baseUrl
+        print('token:', self.token)
+        print('baseUrl:', self.baseUrl)
 
     def get_headers(self):
         return {'Content-Type': 'application/json', 'Authorization': 'token ' + self.token}
@@ -38,6 +38,6 @@ class SampleClient(object):
 if __name__ == "__main__":
     client = SampleClient()
     collectionMethodId = client.get_collection_method_id(u'Water Quality')
-    print 'collection method id is ', collectionMethodId
+    print('collection method id is ', collectionMethodId)
 
 

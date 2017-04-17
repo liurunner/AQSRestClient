@@ -2,7 +2,7 @@ import datetime as dt
 import logging
 import logging.config
 import os
-import thread
+import threading
 
 __prefix__ = 'AQSRestClient'
 __pid__ = os.getpid()
@@ -15,7 +15,7 @@ class CommonLoggingFormatter(logging.Formatter):
     def format_time(self, record, date_format=None):
         ct = self.converter(record.created)
         s = ct.strftime(date_format) if date_format else ct.strftime("%Y-%m-%d %H:%M:%S")
-        s += ",%03d [%d]" % (record.msecs, __pid__, thread.get_ident())
+        s += ",%03d [%d]" % (record.msecs, __pid__, threading.get_ident())
         return s
 
 

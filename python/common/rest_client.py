@@ -2,7 +2,7 @@ import json
 
 import requests
 
-from common_logging import CommonLogging
+from .common_logging import CommonLogging
 
 
 class RestClient(object):
