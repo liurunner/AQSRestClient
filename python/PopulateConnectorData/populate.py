@@ -54,10 +54,10 @@ class ConnectorPropagator(object):
             sampling_location = self.sample_client.get_or_create_sampling_location(sampling_location_overrides)
             sampling_locations.append(sampling_location)
 
-            if location_data['isVerticalProfile']:
-                self.populate_vertical_profile_observations(sampling_location)
-            elif 'csv_data_pattern' in location_data:
+            if 'csv_data_pattern' in location_data:
                 self.populate_csv_observations(sampling_location, location_data['csv_data_pattern'])
+            elif 'vertical_profile_csv' in location_data:
+                self.populate_vertical_profile_csv(sampling_location, location_data['vertical_profile_csv'])
 
             self.logger.info('populate_locations %s done', sampling_location_custom_id)
 
@@ -108,24 +108,24 @@ class ConnectorPropagator(object):
         self.sample_client.put_domain_object('exchangeconfigurations', exchange_configuration)
         self.logger.info('populate_exchange_configuration is done')
 
-    def populate_vertical_profile_observations(self, sampling_location):
+    def populate_vertical_profile_csv(self, sampling_location, vertical_profile_csv):
         self.sample_client.delete_observations({'samplingLocationIds': sampling_location['id']})
         self.sample_client.delete_field_visits_by_sampling_location_id(sampling_location['id'])
 
         field_visit_overrides = {
             'samplingLocation': sampling_location,
-            'customId': sampling_location['customId'] + '_FV_20141029'
+            'customId': sampling_location['customId'] + '_FV_001'
         }
         field_visit = self.sample_client.get_or_create_field_visit(field_visit_overrides)
 
         activity_overrides = {
             'fieldVisit': field_visit,
-            'customId': sampling_location['customId'] + '_VPA_20141029',
+            'customId': sampling_location['customId'] + '_VP_001',
             'type': 'SAMPLE_INTEGRATED_VERTICAL_PROFILE'
         }
         activity = self.sample_client.get_or_create_activity(activity_overrides)
 
-        self.sample_client.import_file('services/import/verticalprofiledata', './DefaultVerticalProfileData.csv', params={
+        self.sample_client.import_file('services/import/verticalprofiledata', vertical_profile_csv, params={
             'activityId': activity['id'],
             'samplingLocationIds': sampling_location['id']
         })
@@ -146,11 +146,10 @@ class ConnectorPropagator(object):
         return {
             'AqsConnectorLoc1': {
                 'external_location': '',
-                'isVerticalProfile': True
+                'vertical_profile_csv': '../resources/DefaultVerticalProfileData.csv'
             },
             'AqsConnectorLoc2': {
                 'external_location': '',
-                'isVerticalProfile': False,
                 'csv_data_pattern': """Observation ID,Location ID,Observed Property ID,Observed DateTime,Analyzed DateTime,Depth,Depth Unit,Data Classification,Result Value,Result Unit,Result Status,Result Grade,Medium,Sample ID,Collection Method,Field: Device ID,Field: Device Type,Field: Comment,Lab: Specimen Name,Lab: Analysis Method,Lab: Detection Condition,Lab: Limit Type,Lab: MDL,Lab: MRL,Lab: Quality Flag,Lab: Received DateTime,Lab: Prepared DateTime,Lab: Sample Fraction,Lab: From Laboratory,Lab: Sample ID,Lab: Dilution Factor,Lab: Comment,QC: Type,QC: Source Sample ID
 ,{0},Ammonia,2014-10-29T09:00:00.000-07:00,2014-10-29T09:00:00.000-07:00,5,ft,LAB,8.6,mg/l,Preliminary,Ok,Water,{0}_SA_20141029_1,GRAB,,,,bottle1,,,LOWER,,,,,,,,,,,,
 ,{0},Ammonia,2014-10-29T09:10:00.000-07:00,2014-10-29T09:10:00.000-07:00,5,ft,LAB,,mg/l,Preliminary,Ok,Water,{0}_SA_20141029_2,GRAB,,,,bottle2-ND,,not detected,LOWER,50,0.1,,,,,,,,,,
@@ -166,11 +165,13 @@ class ConnectorPropagator(object):
             },
             'AqsConnectorLoc3': {
                 'external_location': '',
-                'isVerticalProfile': False,
                 'csv_data_pattern': """Observation ID,Location ID,Observed Property ID,Observed DateTime,Analyzed DateTime,Depth,Depth Unit,Data Classification,Result Value,Result Unit,Result Status,Result Grade,Medium,Sample ID,Collection Method,Field: Device ID,Field: Device Type,Field: Comment,Lab: Specimen Name,Lab: Analysis Method,Lab: Detection Condition,Lab: Limit Type,Lab: MDL,Lab: MRL,Lab: Quality Flag,Lab: Received DateTime,Lab: Prepared DateTime,Lab: Sample Fraction,Lab: From Laboratory,Lab: Sample ID,Lab: Dilution Factor,Lab: Comment,QC: Type,QC: Source Sample ID,Standards Violations
 ,{0},Ammonia,1700-01-01T09:10:00.000-07:00,1700-01-01T09:10:00.000-07:00,,,LAB,8.2,mg/l,PRELIMINARY,OK,WATER,{0}_SA_17000101_bottle1,,,,,bottle1,,,,,,,,,,,,,,,,
 ,{0},Ammonia,3000-01-01T09:10:00.000-07:00,3000-01-01T09:10:00.000-07:00,,,LAB,8.6,mg/l,PRELIMINARY,OK,WATER,{0}_SA_30000101_bottle1,,,,,bottle1,,,,,,,,,,,,,,,,
 """
+            },
+            'AqsConnectorLoc4': {
+                'external_location': 'NoneExistingLocation'
             }
         }
 
@@ -217,11 +218,10 @@ class ConnectorPropagatorOnSecondSync(ConnectorPropagator):
         return {
             'AqtsConnectorLoc1': {
                 'external_location': 'AqsConnectorLoc1',
-                'isVerticalProfile': True
+                'vertical_profile_csv': '../resources/DefaultVerticalProfileData.csv'
             },
             'AqtsConnectorLoc2': {
                 'external_location': 'AqsConnectorLoc2',
-                'isVerticalProfile': False,
                 'csv_data_pattern': """Observation ID,Location ID,Observed Property ID,Observed DateTime,Analyzed DateTime,Depth,Depth Unit,Data Classification,Result Value,Result Unit,Result Status,Result Grade,Medium,Sample ID,Collection Method,Field: Device ID,Field: Device Type,Field: Comment,Lab: Specimen Name,Lab: Analysis Method,Lab: Detection Condition,Lab: Limit Type,Lab: MDL,Lab: MRL,Lab: Quality Flag,Lab: Received DateTime,Lab: Prepared DateTime,Lab: Sample Fraction,Lab: From Laboratory,Lab: Sample ID,Lab: Dilution Factor,Lab: Comment,QC: Type,QC: Source Sample ID
 ,{0},Ammonia,2014-10-29T09:00:00.000-07:00,2014-10-29T09:05:00.000-07:00,5,ft,LAB,9.6,mg/l,Preliminary,Ok,Water,{0}_SA_20141029_1,GRAB,,,,bottle1,,,LOWER,,,,,,,,,,,,
 ,{0},Ammonia,2014-10-29T09:10:00.000-07:00,2014-10-29T09:10:00.000-07:00,5,ft,LAB,,mg/l,Preliminary,Ok,Water,{0}_SA_20141029_2,GRAB,,,,bottle2-ND,,not detected,LOWER,50,0.1,,,,,,,,,,
@@ -235,15 +235,13 @@ class ConnectorPropagatorOnSecondSync(ConnectorPropagator):
             },
             'AqtsConnectorLoc3': {
                 'external_location': 'AqsConnectorLoc3',
-                'isVerticalProfile': False,
                 'csv_data_pattern': """Observation ID,Location ID,Observed Property ID,Observed DateTime,Analyzed DateTime,Depth,Depth Unit,Data Classification,Result Value,Result Unit,Result Status,Result Grade,Medium,Sample ID,Collection Method,Field: Device ID,Field: Device Type,Field: Comment,Lab: Specimen Name,Lab: Analysis Method,Lab: Detection Condition,Lab: Limit Type,Lab: MDL,Lab: MRL,Lab: Quality Flag,Lab: Received DateTime,Lab: Prepared DateTime,Lab: Sample Fraction,Lab: From Laboratory,Lab: Sample ID,Lab: Dilution Factor,Lab: Comment,QC: Type,QC: Source Sample ID,Standards Violations
 ,{0},Ammonia,1700-01-01T09:10:00.000-07:00,1700-01-01T09:10:00.000-07:00,,,LAB,8.2,mg/l,PRELIMINARY,OK,WATER,{0}_SA_17000101_bottle1,,,,,bottle1,,,,,,,,,,,,,,,,
 ,{0},Ammonia,3000-01-01T09:10:00.000-07:00,3000-01-01T09:10:00.000-07:00,,,LAB,8.6,mg/l,PRELIMINARY,OK,WATER,{0}_SA_30000101_bottle1,,,,,bottle1,,,,,,,,,,,,,,,,
 """
             },
             'AqtsConnectorLoc4': {
-                'external_location': 'NoneExistingLocation',
-                'isVerticalProfile': False
+                'external_location': 'NoneExistingLocation'
             }
         }
 
