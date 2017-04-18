@@ -76,13 +76,13 @@ class ConnectorPropagator(object):
         setting_key_values = {
             'DEFAULT_TIME_ZONE_OFFSET_HOURS': '-7',
             'DEFAULT_LOCATION_PATH': 'All Locations',
-            #'DEFAULT_LOCATION_TYPE': 'Water Quality Site',
+            'DEFAULT_LOCATION_TYPE': 'Water Quality Site',
             # AQUARIUS Time Series 3X
             #'DEFAULT_LOCATION_EXTENDED_ATTRIBUTES': 'NumSensors=10,Device=Trimble GPS GeoExplorer XH 6000,PlannedDatetime=2015-12-12 12:00',
             #'DEFAULT_TIME_SERIES_EXTENDED_ATTRIBUTES': '',
             # AQUARIUS Time Series NG
-            #'DEFAULT_LOCATION_EXTENDED_ATTRIBUTES': 'LOGGERTYPE@LOCATION_EXTENSION=loggerType,NUMBEROFSENSORS@LOCATION_EXTENSION=5,LASTMODIFIED@LOCATION_EXTENSION=2015-12-12T12:00:00',
-            #'DEFAULT_TIME_SERIES_EXTENDED_ATTRIBUTES': 'AVERAGE@TIMESERIES_EXTENSION=12,RECORDDATE@TIMESERIES_EXTENSION=2016-10-01T12:00:00,DATADESC@TIMESERIES_EXTENSION=My description',
+            'DEFAULT_LOCATION_EXTENDED_ATTRIBUTES': 'LOGGERTYPE@LOCATION_EXTENSION=loggerType,NUMBEROFSENSORS@LOCATION_EXTENSION=5,LASTMODIFIED@LOCATION_EXTENSION=2015-12-12T12:00:00',
+            'DEFAULT_TIME_SERIES_EXTENDED_ATTRIBUTES': 'AVERAGE@TIMESERIES_EXTENSION=12,RECORDDATE@TIMESERIES_EXTENSION=2016-10-01T12:00:00,DATADESC@TIMESERIES_EXTENSION=My description',
             'DEPTH_PARAMETER': 'DEPTH',
             'DEPTH_PARAMETER_UNIT': 'ft',
             'NON_DETECT_ALGORITHM': 'HALF_MDL'
@@ -224,23 +224,23 @@ class ConnectorPropagatorOnSecondSync(ConnectorPropagator):
             'AqtsConnectorLoc2': {
                 'external_location': 'AqsConnectorLoc2',
                 'csv_data_pattern': """Observation ID,Location ID,Observed Property ID,Observed DateTime,Analyzed DateTime,Depth,Depth Unit,Data Classification,Result Value,Result Unit,Result Status,Result Grade,Medium,Sample ID,Collection Method,Field: Device ID,Field: Device Type,Field: Comment,Lab: Specimen Name,Lab: Analysis Method,Lab: Detection Condition,Lab: Limit Type,Lab: MDL,Lab: MRL,Lab: Quality Flag,Lab: Received DateTime,Lab: Prepared DateTime,Lab: Sample Fraction,Lab: From Laboratory,Lab: Sample ID,Lab: Dilution Factor,Lab: Comment,QC: Type,QC: Source Sample ID
-,{0},Ammonia,2014-10-29T09:00:00.000-07:00,2014-10-29T09:05:00.000-07:00,5,ft,LAB,9.6,mg/l,Preliminary,Ok,Water,{0}_SA_20141029_1,GRAB,,,,bottle1,,,LOWER,,,,,,,,,,,,
+,{0},Ammonia,2014-10-29T09:05:00.000-07:00,2014-10-29T09:05:00.000-07:00,5,ft,LAB,9.6,mg/l,Preliminary,Ok,Water,{0}_SA_20141029_1,GRAB,,,,bottle1,,,LOWER,,,,,,,,,,,,
 ,{0},Ammonia,2014-10-29T09:10:00.000-07:00,2014-10-29T09:10:00.000-07:00,5,ft,LAB,,mg/l,Preliminary,Ok,Water,{0}_SA_20141029_2,GRAB,,,,bottle2-ND,,not detected,LOWER,50,0.1,,,,,,,,,,
-,{0},Ammonia,2014-10-29T09:20:00.000-07:00,2014-10-29T09:15:00.000-07:00,5,ft,LAB,9.2,mg/l,Preliminary,Ok,Water,{0}_SA_20141029_3_1,GRAB,,,,bottle3,,,LOWER,,,,,,,,,,,,
-,{0},Ammonia,2014-10-29T09:20:00.000-07:00,2014-10-29T09:20:00.000-07:00,10,ft,LAB,9.2,mg/l,Preliminary,Ok,Water,{0}_SA_20141029_3_2,GRAB,,,,bottle3_1,,,LOWER,,,,,,,,,,,,
-,{0},Ammonia,2014-10-29T09:20:00.000-07:00,2014-10-29T09:20:00.000-07:00,20,ft,LAB,9.2,mg/l,Preliminary,Ok,Water,{0}_SA_20141029_3_3,GRAB,,,,bottle3_2,,,LOWER,,,,,,,,,,,,
-,{0},Ammonia,2014-10-29T09:30:00.000-07:00,2014-10-29T09:20:00.000-07:00,5,ft,LAB,9.8,mg/l,Preliminary,Ok,Water,{0}_SA_20141029_4,GRAB,,,,bottle4,,,LOWER,,,,,,,,,,,,
-,{0},Total suspended solids,2014-10-29T09:00:00.000-07:00,2014-10-29T09:05:00.000-07:00,5,ft,LAB,9.6,mg/l,Preliminary,Ok,Water,{0}_SA_20141029_1,GRAB,,,,bottle1,,,LOWER,,,,,,,,,,,,
+,{0},Ammonia,2014-10-29T09:15:00.000-07:00,2014-10-29T09:15:00.000-07:00,5,ft,LAB,9.2,mg/l,Preliminary,Ok,Water,{0}_SA_20141029_3_1,GRAB,,,,bottle3,,,LOWER,,,,,,,,,,,,
+,{0},Ammonia,2014-10-29T09:15:00.000-07:00,2014-10-29T09:15:00.000-07:00,10,ft,LAB,9.2,mg/l,Preliminary,Ok,Water,{0}_SA_20141029_3_2,GRAB,,,,bottle3_1,,,LOWER,,,,,,,,,,,,
+,{0},Ammonia,2014-10-29T09:15:00.000-07:00,2014-10-29T09:15:00.000-07:00,20,ft,LAB,9.2,mg/l,Preliminary,Ok,Water,{0}_SA_20141029_3_3,GRAB,,,,bottle3_2,,,LOWER,,,,,,,,,,,,
+,{0},Ammonia,2014-10-29T09:20:00.000-07:00,2014-10-29T09:20:00.000-07:00,5,ft,LAB,9.8,mg/l,Preliminary,Ok,Water,{0}_SA_20141029_4,GRAB,,,,bottle4,,,LOWER,,,,,,,,,,,,
+,{0},Total suspended solids,2014-10-29T09:05:00.000-07:00,2014-10-29T09:05:00.000-07:00,5,ft,LAB,9.6,mg/l,Preliminary,Ok,Water,{0}_SA_20141029_1,GRAB,,,,bottle1,,,LOWER,,,,,,,,,,,,
 ,{0},Total suspended solids,2014-10-29T09:10:00.000-07:00,2014-10-29T09:10:00.000-07:00,5,ft,LAB,,mg/l,Preliminary,Ok,Water,{0}_SA_20141029_2,GRAB,,,,bottle2-ND,,not detected,LOWER,50,0.1,,,,,,,,,,
-,{0},Total suspended solids,2014-10-29T09:20:00.000-07:00,2014-10-29T09:15:00.000-07:00,5,ft,LAB,9.2,mg/l,Preliminary,Ok,Water,{0}_SA_20141029_3_1,GRAB,,,,bottle3,,,LOWER,,,,,,,,,,,,
-,{0},Total suspended solids,2014-10-29T09:30:00.000-07:00,2014-10-29T09:20:00.000-07:00,5,ft,LAB,9.8,mg/l,Preliminary,Ok,Water,{0}_SA_20141029_4,GRAB,,,,bottle4,,,LOWER,,,,,,,,,,,,
+,{0},Total suspended solids,2014-10-29T09:15:00.000-07:00,2014-10-29T09:15:00.000-07:00,5,ft,LAB,9.2,mg/l,Preliminary,Ok,Water,{0}_SA_20141029_3_1,GRAB,,,,bottle3,,,LOWER,,,,,,,,,,,,
+,{0},Total suspended solids,2014-10-29T09:20:00.000-07:00,2014-10-29T09:20:00.000-07:00,5,ft,LAB,9.8,mg/l,Preliminary,Ok,Water,{0}_SA_20141029_4,GRAB,,,,bottle4,,,LOWER,,,,,,,,,,,,
 """
             },
             'AqtsConnectorLoc3': {
                 'external_location': 'AqsConnectorLoc3',
                 'csv_data_pattern': """Observation ID,Location ID,Observed Property ID,Observed DateTime,Analyzed DateTime,Depth,Depth Unit,Data Classification,Result Value,Result Unit,Result Status,Result Grade,Medium,Sample ID,Collection Method,Field: Device ID,Field: Device Type,Field: Comment,Lab: Specimen Name,Lab: Analysis Method,Lab: Detection Condition,Lab: Limit Type,Lab: MDL,Lab: MRL,Lab: Quality Flag,Lab: Received DateTime,Lab: Prepared DateTime,Lab: Sample Fraction,Lab: From Laboratory,Lab: Sample ID,Lab: Dilution Factor,Lab: Comment,QC: Type,QC: Source Sample ID,Standards Violations
-,{0},Ammonia,1700-01-01T09:10:00.000-07:00,1700-01-01T09:10:00.000-07:00,,,LAB,8.2,mg/l,PRELIMINARY,OK,WATER,{0}_SA_17000101_bottle1,,,,,bottle1,,,,,,,,,,,,,,,,
-,{0},Ammonia,3000-01-01T09:10:00.000-07:00,3000-01-01T09:10:00.000-07:00,,,LAB,8.6,mg/l,PRELIMINARY,OK,WATER,{0}_SA_30000101_bottle1,,,,,bottle1,,,,,,,,,,,,,,,,
+,{0},Ammonia,1700-02-01T09:10:00.000-07:00,1700-02-01T09:10:00.000-07:00,,,LAB,8.4,mg/l,PRELIMINARY,OK,WATER,{0}_SA_17000101_bottle1,,,,,bottle1,,,,,,,,,,,,,,,,
+,{0},Ammonia,2999-12-01T09:10:00.000-07:00,2999-12-01T09:10:00.000-07:00,,,LAB,8.5,mg/l,PRELIMINARY,OK,WATER,{0}_SA_30000101_bottle1,,,,,bottle1,,,,,,,,,,,,,,,,
 """
             },
             'AqtsConnectorLoc4': {
